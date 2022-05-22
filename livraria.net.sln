@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "livraria.net.api", "src\livraria.net.api\livraria.net.api.csproj", "{A4B4FE00-8F9B-447A-B212-A0EF283D4057}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "livraria.net.api", "src\livraria.net.api\livraria.net.api.csproj", "{A4B4FE00-8F9B-447A-B212-A0EF283D4057}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "livraria.net.domain", "src\livraria.net.domain\livraria.net.domain.csproj", "{23AEEB2F-72D8-46AA-8B8D-D8E2318611A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FA703AD7-4452-47C2-AEB2-CB9ABB2E2797}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{35B09715-668C-4FDE-A9D9-0602DAA92B49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "livraria.net.test", "test\livraria.net.test\livraria.net.test.csproj", "{718A4819-9EA4-4093-9172-0B8D4E42A2EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +23,22 @@ Global
 		{A4B4FE00-8F9B-447A-B212-A0EF283D4057}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4B4FE00-8F9B-447A-B212-A0EF283D4057}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4B4FE00-8F9B-447A-B212-A0EF283D4057}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23AEEB2F-72D8-46AA-8B8D-D8E2318611A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23AEEB2F-72D8-46AA-8B8D-D8E2318611A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23AEEB2F-72D8-46AA-8B8D-D8E2318611A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23AEEB2F-72D8-46AA-8B8D-D8E2318611A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{718A4819-9EA4-4093-9172-0B8D4E42A2EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{718A4819-9EA4-4093-9172-0B8D4E42A2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{718A4819-9EA4-4093-9172-0B8D4E42A2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{718A4819-9EA4-4093-9172-0B8D4E42A2EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A4B4FE00-8F9B-447A-B212-A0EF283D4057} = {FA703AD7-4452-47C2-AEB2-CB9ABB2E2797}
+		{23AEEB2F-72D8-46AA-8B8D-D8E2318611A8} = {FA703AD7-4452-47C2-AEB2-CB9ABB2E2797}
+		{718A4819-9EA4-4093-9172-0B8D4E42A2EB} = {35B09715-668C-4FDE-A9D9-0602DAA92B49}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95A6D670-2A0D-4E00-AF32-FA4897171AF1}
