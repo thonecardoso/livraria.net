@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace livraria.net.api.Enums
+namespace livraria.net.core.Enums
 {
     public enum Gender
     {

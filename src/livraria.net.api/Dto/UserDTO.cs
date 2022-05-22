@@ -1,4 +1,4 @@
-﻿using livraria.net.api.Enums;
+﻿using livraria.net.core.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
 
