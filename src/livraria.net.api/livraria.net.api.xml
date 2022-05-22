@@ -1,0 +1,389 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>livraria.net.api</name>
+    </assembly>
+    <members>
+        <member name="M:livraria.net.api.Controllers.AuthorController.create(livraria.net.api.Dto.AuthorDTO)">
+            <summary>
+            Author creation operation
+            </summary>
+            <param name="authorDTO"></param>
+            <returns></returns>
+            <response code="201">Success author created</response>>
+            <response code="400">Missing required fields, wrong field range value or author already registered</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                POST /api/v1/authors 
+                {
+                    "id": 0,
+                    "name": "Mario Carlos Andrade",
+                    "age": 33
+                }
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.AuthorController.FindById(System.Int32)">
+            <summary>
+            Find author by id operation
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="200">Success author found</response>>
+            <response code="404">Author not found error code</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                GET /api/v1/authors/123
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.AuthorController.FindAll">
+            <summary>
+            Find all registered authors
+            </summary>
+            <returns></returns>
+            <response code="200">Success all registered authors</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                GET /api/v1/authors
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.AuthorController.Delete(System.Int32)">
+            <summary>
+            Delete author by id operation
+            </summary>
+            <param name="id"></param>
+            <response code="204">Success author deleted</response>>
+            <response code="404">Author not found error code</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                DELETE /api/v1/authors/123
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.AuthorController.Update(System.Int32,livraria.net.api.Dto.AuthorDTO)">
+            <summary>
+            Author update operation
+            </summary>
+            <param name="id"></param>
+            <param name="authorDTO"></param>
+            <returns></returns>
+            <response code="200">Success author updated</response>>
+            <response code="400">Missing required fields, or an error on validation field rules</response>>        
+            <response code="404">Author not found</response>> 
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                PUT /api/v1/authors/123 
+                {
+                    "id": 123,
+                    "name": "Mario Carlos Cortela",
+                    "age": 31
+                }
+            
+            </remarks> 
+        </member>
+        <member name="T:livraria.net.api.Controllers.BookController">
+            <summary>
+            Books module management
+            </summary>
+        </member>
+        <member name="M:livraria.net.api.Controllers.BookController.create(livraria.net.api.Dto.BookRequestDTO)">
+            <summary>
+            Book creation operation
+            </summary>
+            <param name="bookRequestDTO"></param>
+            <returns></returns>
+            <response code="201">Success book creation</response>>
+            <response code="400">Missing required fields, wrong field range value or book already registered</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                POST /api/v1/books 
+                {
+                    "id": 0,
+                    "name": "O Pequeno Principe",
+                    "pages": 90,
+                    "chapters": 16,
+                    "isbn": 9788854172388,
+                    "publisherId": 97,
+                    "authorId": 34
+                }
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.BookController.FindById(System.Int32)">
+            <summary>
+            Find book by id operation
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="200">Success book found</response>>
+            <response code="404">Book not found error code</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                GET /api/v1/books/123
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.BookController.FindAll">
+            <summary>
+            List all registered books
+            </summary>
+            <returns></returns>
+            <response code="200">Success all registered books</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                GET /api/v1/books
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.BookController.Delete(System.Int32)">
+            <summary>
+            Delete book by id operation
+            </summary>
+            <param name="id"></param>
+            <response code="204">Success book deleted</response>>
+            <response code="404">Book not found error code</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                DELETE /api/v1/books/123
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.BookController.Update(System.Int32,livraria.net.api.Dto.BookRequestDTO)">
+            <summary>
+            Book update operation
+            </summary>
+            <param name="id"></param>
+            <param name="bookRequestDTO"></param>
+            <returns></returns>
+            <response code="200">Success book updated</response>>
+            <response code="400">Missing required fields, or an error on validation field rules</response>>        
+            <response code="404">Book not found</response>> 
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                PUT /api/v1/books/123 
+                {
+                    "id": 0,
+                    "name": "O Pequeno Principe",
+                    "pages": 90,
+                    "chapters": 16,
+                    "isbn": 9788854172388,
+                    "publisherId": 97,
+                    "authorId": 34
+                }
+            
+            </remarks> 
+        </member>
+        <member name="M:livraria.net.api.Controllers.PublisherController.create(livraria.net.api.Dto.PublisherDTO)">
+            <summary>
+            Publisher creation operation
+            </summary>
+            <param name="PublisherDTO"></param>
+            <returns></returns>
+            <response code="201">Success publisher created</response>>
+            <response code="400">Missing required fields, wrong field range value or publisher already registered</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                POST /api/v1/publishers 
+                {
+                    "id": 0,
+                    "name": "Mario Carlos Andrade",
+                    "code": asdfget24,
+                    "fundationDate": "2022-05-22"
+                }
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.PublisherController.FindById(System.Int32)">
+            <summary>
+            Find publisher by id operation
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="200">Success publisher found</response>>
+            <response code="404">Publisher not found error code</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                GET /api/v1/publishers/123
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.PublisherController.FindAll">
+            <summary>
+            Find all registered publishers
+            </summary>
+            <returns></returns>
+            <response code="200">Success all registered publishers</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                GET /api/v1/publishers
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.PublisherController.Delete(System.Int32)">
+            <summary>
+            Delete publisher by id operation
+            </summary>
+            <param name="id"></param>
+            <response code="204">Success publisher deleted</response>>
+            <response code="404">Publisher not found error code</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                DELETE /api/v1/publishers/123
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.PublisherController.Update(System.Int32,livraria.net.api.Dto.PublisherDTO)">
+            <summary>
+            Publisher update operation
+            </summary>
+            <param name="id"></param>
+            <param name="publisherDTO"></param>
+            <returns></returns>
+            <response code="200">Success publisher updated</response>>
+            <response code="400">Missing required fields, or an error on validation field rules</response>>        
+            <response code="404">Publisher not found</response>> 
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                PUT /api/v1/publishers/123 
+                {
+                    "id": 123,
+                    "name": "Mario Carlos Andrade",
+                    "code": asdfget24,
+                    "fundationDate": "2022-05-22"
+                }
+            
+            </remarks> 
+        </member>
+        <member name="M:livraria.net.api.Controllers.UserController.create(livraria.net.api.Dto.UserDTO)">
+            <summary>
+            User creation operation
+            </summary>
+            <param name="userDTO"></param>
+            <returns></returns>
+            <response code="201">Success user created</response>>
+            <response code="400">Missing required fields, wrong field range value or user already registered</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                POST /api/v1/users 
+                {
+                    "Id":0,
+                    "Name":"Isabela Batista",
+                    "Age":46,
+                    "Gender":1,
+                    "Email":"IsabelaBatista35@yahoo.com",
+                    "Username":"IsabelaBatista",
+                    "Password":"42119ca2398640f1a0322652cd91876f",
+                    "Birthdate":"1975-11-16T14:13:49.1963533-02:00"
+                }
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.UserController.FindById(System.Int32)">
+            <summary>
+            Find user by id operation
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="200">Success user found</response>>
+            <response code="404">User not found error code</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                GET /api/v1/users/123
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.UserController.FindAll">
+            <summary>
+            Find all registered users
+            </summary>
+            <returns></returns>
+            <response code="200">Success all registered users</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                GET /api/v1/users
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.UserController.Delete(System.Int32)">
+            <summary>
+            Delete user by id operation
+            </summary>
+            <param name="id"></param>
+            <response code="204">Success user deleted</response>>
+            <response code="404">User not found error code</response>>
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                DELETE /api/v1/users/123
+            
+            </remarks>
+        </member>
+        <member name="M:livraria.net.api.Controllers.UserController.Update(System.Int32,livraria.net.api.Dto.UserDTO)">
+            <summary>
+            User update operation
+            </summary>
+            <param name="id"></param>
+            <param name="userDTO"></param>
+            <returns></returns>
+            <response code="200">Success user updated</response>>
+            <response code="400">Missing required fields, or an error on validation field rules</response>>        
+            <response code="404">User not found</response>> 
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                PUT /api/v1/users/123 
+                {
+                    "Id":123,
+                    "Name":"Isabela Batista",
+                    "Age":46,
+                    "Gender":1,
+                    "Email":"IsabelaBatista35@yahoo.com",
+                    "Username":"IsabelaBatista",
+                    "Password":"42119ca2398640f1a0322652cd91876f",
+                    "Birthdate":"1975-11-16T14:13:49.1963533-02:00"
+                }
+            
+            </remarks> 
+        </member>
+    </members>
+</doc>
