@@ -139,10 +139,11 @@
             
             </remarks>
         </member>
-        <member name="M:livraria.net.api.Controllers.BookController.FindAll">
+        <member name="M:livraria.net.api.Controllers.BookController.FindAll(livraria.net.api.Query.BookQuery)">
             <summary>
             List all registered books
             </summary>
+            <param name="query"></param>
             <returns></returns>
             <response code="200">Success all registered books</response>>
             <response code="500">Internal error on the API</response>>
