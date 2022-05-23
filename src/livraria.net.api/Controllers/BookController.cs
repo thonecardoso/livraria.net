@@ -1,4 +1,5 @@
 ﻿using livraria.net.api.Dto;
+using livraria.net.api.Query;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -79,6 +80,7 @@ namespace livraria.net.api.Controllers
         /// <summary>
         /// List all registered books
         /// </summary>
+        /// <param name="query"></param>
         /// <returns></returns>
         /// <response code="200">Success all registered books</response>>
         /// <response code="500">Internal error on the API</response>>
@@ -91,7 +93,7 @@ namespace livraria.net.api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public List<BookResponseDTO> FindAll()
+        public List<BookResponseDTO> FindAll([FromQuery] BookQuery query)
         {
             return new List<BookResponseDTO>();
         }

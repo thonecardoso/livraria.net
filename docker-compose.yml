@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+
+  postgresdb:
+    container_name: postgres
+    image: postgres
+    environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=root
+    restart: always
+    ports:
+        - "5432:5432"
+    networks:
+      - webproxy
+    volumes:
+        - postgres_data:/var/lib/postgresql/data/
+
+  livraria.net.api:
+    image: ${DOCKER_REGISTRY-}livrarianetapi
+    build:
+      context: .
+      dockerfile: src/livraria.net.api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - "Api-StringBd-Postgres:Host=postgresdb;Database=livrarianet;Username=postgres;Password=root"
+    ports:
+      - "5101:80"
+    depends_on:
+      - postgresdb
+    networks:
+      - webproxy
+
+networks:
+  webproxy:
+    driver: bridge
+
+volumes:
+  postgres_data:

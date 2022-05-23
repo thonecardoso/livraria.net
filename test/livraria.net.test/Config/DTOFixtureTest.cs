@@ -4,7 +4,7 @@ using livraria.net.api.Dto;
 using System;
 using Xunit;
 using static Bogus.DataSets.Name;
-using G = livraria.net.api.Enums;
+using G = livraria.net.core.Enums;
 
 namespace livraria.net.test.Config
 {
