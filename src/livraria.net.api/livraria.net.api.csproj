@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\livraria.net.infra\livraria.net.infra.csproj" />
+    <ProjectReference Include="..\livraria.net.infra\livraria.net.infra.csproj" />
     <ProjectReference Include="..\livraria.net.core\livraria.net.core.csproj" />
   </ItemGroup>
 

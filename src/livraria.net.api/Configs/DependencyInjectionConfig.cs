@@ -14,7 +14,7 @@ namespace livraria.net.api.Configs
         {
            
             services.AddScoped<INotificator, NotificatorHandler>();
-            services.AddScoped<IAuthorRepository, AuthorRepository> ();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<AuthorService>();
 
             return services;
