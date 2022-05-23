@@ -11,23 +11,24 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace livraria.net.infra
+namespace livraria.net.infra.Repository
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity, new()
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
         protected readonly ApiDbContext Db;
         protected readonly DbSet<TEntity> DbSet;
 
-        protected Repository(ApiDbContext db)
+        public Repository(ApiDbContext db)
         {
             Db = db;
             DbSet = db.Set<TEntity>();
         }
 
-        public virtual async Task Add(TEntity entity)
+        public virtual async Task<TEntity> Add(TEntity entity)
         {
             DbSet.Add(entity);
             await SaveChanges();
+            return entity;
         }
 
         public virtual async Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)

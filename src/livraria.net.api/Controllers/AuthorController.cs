@@ -1,14 +1,27 @@
-﻿using livraria.net.api.Dto;
+﻿using AutoMapper;
+using livraria.net.api.Dto;
+using livraria.net.core.Contracts;
+using livraria.net.core.Controllers;
+using livraria.net.domain.Models;
+using livraria.net.domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace livraria.net.api.Controllers
 {
     [ApiController]
     [Route("api/v1/authors")]
-    public class AuthorController : ControllerBase
+    public class AuthorController : MainController
     {
+        private readonly AuthorService _service;
+        public AuthorController(IMapper mapper, INotificator notificator, AuthorService service) : base(mapper, notificator)
+        {
+            _service = service;
+        }
+
         /// <summary>
         /// Author creation operation
         /// </summary>
@@ -32,9 +45,10 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public AuthorDTO create(AuthorDTO authorDTO)
+        public async Task<IActionResult> create(AuthorDTO authorDTO)
         {
-            return authorDTO;
+            var createdAuthor = _service.CreateAsync(_mapper.Map<Author>(authorDTO));
+            return ResponseCreated(createdAuthor);
         }
 
         /// <summary>
@@ -75,9 +89,10 @@ namespace livraria.net.api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public List<AuthorDTO> FindAll()
+        public async Task<IActionResult> FindAll()
         {
-            return new List<AuthorDTO>();
+            var authors = await _service.GetAllAsync();
+            return ResponseOk(authors.Select(author => _mapper.Map<AuthorDTO>(author)).ToList());
         }
 
         /// <summary>

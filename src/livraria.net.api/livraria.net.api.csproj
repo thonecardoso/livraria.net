@@ -22,6 +22,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -34,7 +35,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\livraria.net.infra\livraria.net.infra.csproj" />
     <ProjectReference Include="..\livraria.net.core\livraria.net.core.csproj" />
-    <ProjectReference Include="..\livraria.net.infra\livraria.net.infra.csproj" />
   </ItemGroup>
 
 </Project>

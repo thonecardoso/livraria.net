@@ -21,7 +21,7 @@ namespace livraria.net.api.Configs
                 options.UseNpgsql(configuration.GetConnectionString("Api-StringBd-Postgres"), o =>
                 {
                     o.EnableRetryOnFailure();
-                });
+                }); 
 
                 options.EnableSensitiveDataLogging();
                 options.LogTo(Console.WriteLine, LogLevel.Information);

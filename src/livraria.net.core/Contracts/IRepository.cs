@@ -9,7 +9,7 @@ namespace livraria.net.core.Contracts
 {
     public interface IRepository<TEntity> : IDisposable where TEntity : Entity
     {
-        Task Add(TEntity entity);
+        Task<TEntity> Add(TEntity entity);
         Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> FindById(int id);
         Task<List<TEntity>> GetAll();

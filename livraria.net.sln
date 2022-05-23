@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{35B09715-6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "livraria.net.test", "test\livraria.net.test\livraria.net.test.csproj", "{718A4819-9EA4-4093-9172-0B8D4E42A2EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "livraria.net.core", "src\livraria.net.core\livraria.net.core.csproj", "{3ECFD3F6-C2D4-4699-B281-C50E00E5DF71}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "livraria.net.infra", "src\livraria.net.infra\livraria.net.infra.csproj", "{80068C17-7321-40D7-9445-C329526D65A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "livraria.net.core", "src\livraria.net.core\livraria.net.core.csproj", "{3ECFD3F6-C2D4-4699-B281-C50E00E5DF71}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6AC4FB03-D6C5-42AF-963D-E2C76D06723E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "livraria.net.infra", "src\livraria.net.infra\livraria.net.infra.csproj", "{1E67174A-991D-407A-9965-5032A1F03655}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,14 +41,14 @@ Global
 		{3ECFD3F6-C2D4-4699-B281-C50E00E5DF71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ECFD3F6-C2D4-4699-B281-C50E00E5DF71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ECFD3F6-C2D4-4699-B281-C50E00E5DF71}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80068C17-7321-40D7-9445-C329526D65A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80068C17-7321-40D7-9445-C329526D65A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80068C17-7321-40D7-9445-C329526D65A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80068C17-7321-40D7-9445-C329526D65A3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6AC4FB03-D6C5-42AF-963D-E2C76D06723E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6AC4FB03-D6C5-42AF-963D-E2C76D06723E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AC4FB03-D6C5-42AF-963D-E2C76D06723E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AC4FB03-D6C5-42AF-963D-E2C76D06723E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E67174A-991D-407A-9965-5032A1F03655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E67174A-991D-407A-9965-5032A1F03655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E67174A-991D-407A-9965-5032A1F03655}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E67174A-991D-407A-9965-5032A1F03655}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,7 +58,7 @@ Global
 		{23AEEB2F-72D8-46AA-8B8D-D8E2318611A8} = {FA703AD7-4452-47C2-AEB2-CB9ABB2E2797}
 		{718A4819-9EA4-4093-9172-0B8D4E42A2EB} = {35B09715-668C-4FDE-A9D9-0602DAA92B49}
 		{3ECFD3F6-C2D4-4699-B281-C50E00E5DF71} = {FA703AD7-4452-47C2-AEB2-CB9ABB2E2797}
-		{80068C17-7321-40D7-9445-C329526D65A3} = {FA703AD7-4452-47C2-AEB2-CB9ABB2E2797}
+		{1E67174A-991D-407A-9965-5032A1F03655} = {FA703AD7-4452-47C2-AEB2-CB9ABB2E2797}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95A6D670-2A0D-4E00-AF32-FA4897171AF1}
