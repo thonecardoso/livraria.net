@@ -1,20 +1,21 @@
 version: '3.4'
 
 services:
-
-  postgresdb:
-    container_name: postgres
-    image: postgres
+  
+  mssql-server:
+    container_name: mssql
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     environment:
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=root
-    restart: always
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "numsey#2021"
+      MSSQL_PID: Express
     ports:
-        - "5432:5432"
+      - "1430:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql/data
     networks:
       - webproxy
-    volumes:
-        - postgres_data:/var/lib/postgresql/data/
+
 
   livraria.net.api:
     image: ${DOCKER_REGISTRY-}livrarianetapi
@@ -23,11 +24,11 @@ services:
       dockerfile: src/livraria.net.api/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - "Api-StringBd-Postgres:Host=postgresdb;Database=livrarianet;Username=postgres;Password=root"
+      - "Api-StringBd:Server=mssql-server, 1433;Initial Catalog=livrarianet;User ID=SA;Password=root"
     ports:
       - "5101:80"
     depends_on:
-      - postgresdb
+      - mssql-server
     networks:
       - webproxy
 
@@ -36,4 +37,4 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data:
+  mssql_data:

@@ -26,7 +26,7 @@ namespace livraria.net.infra.Repository
 
         public virtual async Task<TEntity> Add(TEntity entity)
         {
-            DbSet.Add(entity);
+            DbSet.AddAsync(entity);
             await SaveChanges();
             return entity;
         }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Text.Json.Serialization;
 
 namespace livraria.net.api.Configs
 {
@@ -16,15 +17,22 @@ namespace livraria.net.api.Configs
     {
         public static IServiceCollection AddAppConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApiDbContext>(options =>
-            {
-                options.UseNpgsql(configuration.GetConnectionString("Api-StringBd-Postgres"), o =>
-                {
-                    o.EnableRetryOnFailure();
-                }); 
 
+            var server = configuration.GetSection("Variables:DbServer").Value ?? "mssql-server";
+            var user = configuration.GetSection("Variables:DbUser").Value ?? "SA"; // Warning do not use the SA account
+            var password = configuration.GetSection("Variables:Password").Value ?? "numsey#2021";
+            var database = configuration.GetSection("Variables:Database").Value ?? "livrarianet";
+            var connectionString = $"Server={server};Initial Catalog={database};User ID={user};Password={password}";
+            services.AddDbContext<ApiDbContext>(options => {
+                options.UseSqlServer(connectionString);
                 options.EnableSensitiveDataLogging();
                 options.LogTo(Console.WriteLine, LogLevel.Information);
+            });
+
+            services.AddControllersWithViews().AddJsonOptions(o =>
+            {
+                o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                o.JsonSerializerOptions.MaxDepth = 0;
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -35,7 +43,7 @@ namespace livraria.net.api.Configs
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(); 
 
             //services.AddControllers()
             //    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<StartupApiTests>());
@@ -64,7 +72,22 @@ namespace livraria.net.api.Configs
                 endpoints.MapControllers();
             });
 
+           //DatabaseManagementService.MigrationInitialisation(app);
+
             return app;
+        }
+
+        public static class DatabaseManagementService
+        {
+            // Getting the scope of our database context
+            public static void MigrationInitialisation(IApplicationBuilder app)
+            {
+                using (var serviceScope = app.ApplicationServices.CreateScope())
+                {
+                    // Takes all of our migrations files and apply them against the database in case they are not implemented
+                    serviceScope.ServiceProvider.GetService<ApiDbContext>().Database.Migrate();
+                }
+            }
         }
     }
 }
