@@ -1,14 +1,28 @@
-﻿using livraria.net.api.Dto;
+﻿using AutoMapper;
+using livraria.net.api.Dto;
+using livraria.net.core.Contracts;
+using livraria.net.core.Contracts.Logger;
+using livraria.net.core.Controllers;
+using livraria.net.domain.Helper;
+using livraria.net.domain.Models;
+using livraria.net.domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace livraria.net.api.Controllers
 {
-    [ApiController]
     [Route("api/v1/publishers")]
-    public class PublisherController : ControllerBase
+    public class PublisherController : MainController
     {
+        private readonly PublisherService _service;
+        public PublisherController(IMapper mapper, INotificator notificator, ILog log, PublisherService service) : base(mapper, notificator, log)
+        {
+            _service = service;
+        }
+
         /// <summary>
         /// Publisher creation operation
         /// </summary>
@@ -33,9 +47,11 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public PublisherDTO create(PublisherDTO publisherDTO)
+        public async Task<IActionResult> create(PublisherDTO publisherDTO)
         {
-            return publisherDTO;
+            var createdPubliser = await _service.CreateAsync(_mapper.Map<Publisher>(publisherDTO));
+            await _log.Information(createdPubliser.Id, Med.GetTextFromApi(publisherDTO, HttpContext), "POST.CREATE_PUBLISHER");
+            return ResponseCreated(_mapper.Map<PublisherDTO>(createdPubliser));
         }
 
         /// <summary>
@@ -56,9 +72,14 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public PublisherDTO FindById(int id)
+        public async Task<IActionResult> FindById(int id)
         {
-            return new PublisherDTO { Id = id };
+            var foundPublisher = await _service.FindByIdAsync(id);
+            if (NotificatorHasNotifications())
+            {
+                return ResponseNotFound();
+            }
+            return ResponseOk(_mapper.Map<PublisherDTO>(foundPublisher));
         }
 
         /// <summary>
@@ -76,9 +97,10 @@ namespace livraria.net.api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public List<PublisherDTO> FindAll()
+        public async Task<IActionResult> FindAll()
         {
-            return new List<PublisherDTO>();
+            var publishers = await _service.GetAllAsync();
+            return ResponseOk(publishers.Select(publisher => _mapper.Map<PublisherDTO>(publisher)).ToList());
         }
 
         /// <summary>
@@ -98,9 +120,15 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var authorDTO = new PublisherDTO { Id = id };
+            await _service.DeleteAsync(id);
+            if (NotificatorHasNotifications())
+            {
+                return ResponseNotFound();
+            }
+            await _log.Information(id, Med.GetTextFromApi(null, HttpContext), "DELETE.DELETE_PUBLISHER");
+            return ResponseNoContent();
         }
 
         /// <summary>
@@ -130,9 +158,15 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public PublisherDTO Update(int id, PublisherDTO publisherDTO)
+        public async Task<IActionResult> Update(int id, PublisherDTO publisherDTO)
         {
-            return publisherDTO;
+            var foundPublisher = await _service.UpdateAsync(id, _mapper.Map<Publisher>(publisherDTO));
+            if (NotificatorHasNotifications())
+            {
+                return ResponseNotFound();
+            }
+            await _log.Information(id, Med.GetTextFromApi(publisherDTO, HttpContext), "PUT.UPDATE_PUBLISHER");
+            return ResponseOk(_mapper.Map<PublisherDTO>(foundPublisher));
         }
     }
 }

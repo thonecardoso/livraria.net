@@ -52,13 +52,13 @@ namespace livraria.net.domain.Services
             await _repository.Delete(foundPublisher);
         }
 
-        public async void UpdateAsync(int id, Publisher publisher)
+        public async Task<Publisher> UpdateAsync(int id, Publisher publisher)
         {
             var foundPublisher = await _repository.FindById(id);
             if (foundPublisher == null)
             {
                 AddNotification("Publisher not found!");
-                return;
+                return null;
             }
 
             foundPublisher.Name = publisher.Name; 
@@ -66,6 +66,7 @@ namespace livraria.net.domain.Services
             foundPublisher.FundationDate = publisher.FundationDate;
 
             await _repository.Update(foundPublisher);
+            return foundPublisher;
         }
     }
 }

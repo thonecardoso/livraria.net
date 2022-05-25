@@ -32,9 +32,37 @@ services:
     networks:
       - webproxy
 
+  mongoDb:
+    container_name: mongodb
+    image: mongo
+    restart: always
+    ports:
+        - "27017:27017"
+    volumes:
+        - mongo_data:/data/db
+    networks:
+       - webproxy
+
+  # Link de acesso ao RabbitMQ pelo navegador http://localhost:15672
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management-alpine
+    restart: always
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - rabbitmq_data:/var/lib/rabbitmq/
+        - rabbitmq_log:/var/log/rabbitmq
+    networks:
+        - webproxy
+
 networks:
   webproxy:
     driver: bridge
 
 volumes:
   mssql_data:
+  rabbitmq_data:
+  rabbitmq_log:
+  mongo_data:

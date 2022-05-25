@@ -52,13 +52,13 @@ namespace livraria.net.domain.Services
             await _repository.Delete(foundUser);
         }
 
-        public async void UpdateAsync(int id, User book)
+        public async Task<User> UpdateAsync(int id, User book)
         {
             var foundUser = await _repository.FindById(id);
             if (foundUser == null)
             {
                 AddNotification("User not found!");
-                return;
+                return null;
             }
 
             foundUser.Name = book.Name; 
@@ -70,6 +70,7 @@ namespace livraria.net.domain.Services
             foundUser.Birthdate = book.Birthdate;
 
             await _repository.Update(foundUser);
+            return foundUser;
         }
     }
 }

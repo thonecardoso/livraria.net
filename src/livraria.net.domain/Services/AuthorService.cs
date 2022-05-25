@@ -52,19 +52,20 @@ namespace livraria.net.domain.Services
             await _repository.Delete(foundAuthor);
         }
 
-        public async void UpdateAsync(int id, Author author)
+        public async Task<Author> UpdateAsync(int id, Author author)
         {
             var foundAuthor = await _repository.FindById(id);
             if (foundAuthor == null)
             {
                 AddNotification("Author not found!");
-                return;
+                return null;
             }
 
             foundAuthor.Name = author.Name; 
             foundAuthor.Age = author.Age;
 
             await _repository.Update(foundAuthor);
+            return foundAuthor;
         }
     }
 }

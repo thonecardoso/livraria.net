@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
 using livraria.net.core.Contracts;
+using livraria.net.core.Contracts.Logger;
 using livraria.net.core.Controllers.Shared;
 using livraria.net.core.Extensions;
 using livraria.net.core.Notificator;
@@ -10,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 
 namespace livraria.net.core.Controllers
 {
@@ -19,13 +19,15 @@ namespace livraria.net.core.Controllers
     {
         protected readonly IMapper _mapper;
         protected readonly INotificator _notificator;
+        protected readonly ILog _log;
 
 
         public MainController(IMapper mapper,
-                              INotificator notificator)
+                              INotificator notificator, ILog log)
         {
             _mapper = mapper;
             _notificator = notificator;
+            _log = log;
         }
         protected bool NotificatorHasNotifications()
         {

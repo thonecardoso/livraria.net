@@ -1,18 +1,32 @@
-﻿using livraria.net.api.Dto;
-using livraria.net.api.Query;
+﻿using AutoMapper;
+using livraria.net.api.Dto;
+using livraria.net.core.Contracts;
+using livraria.net.core.Contracts.Logger;
+using livraria.net.core.Controllers;
+using livraria.net.core.Query;
+using livraria.net.domain.Helper;
+using livraria.net.domain.Models;
+using livraria.net.domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace livraria.net.api.Controllers
 {
     /// <summary>
     /// Books module management
     /// </summary>
-    [ApiController]
     [Route("api/v1/books")]
-    public class BookController : ControllerBase
+    public class BookController : MainController
     {
+        private readonly BookService _service;
+        public BookController(IMapper mapper, INotificator notificator, ILog log, BookService service) : base(mapper, notificator, log)
+        {
+            _service = service;
+        }
+
         /// <summary>
         /// Book creation operation
         /// </summary>
@@ -40,18 +54,11 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public BookResponseDTO create(BookRequestDTO bookRequestDTO)
+        public async Task<IActionResult> create(BookRequestDTO bookRequestDTO)
         {
-            return new BookResponseDTO
-            {
-                Id = bookRequestDTO.Id,
-                AuthorId = bookRequestDTO.AuthorId,
-                Chapters = bookRequestDTO.Chapters,
-                Isbn = bookRequestDTO.Isbn,
-                Name = bookRequestDTO.Name,
-                Pages = bookRequestDTO.Pages,
-                PublisherId = bookRequestDTO.PublisherId,
-            };
+            var createdAuthor = await _service.CreateAsync(_mapper.Map<Book>(bookRequestDTO));
+            await _log.Information(createdAuthor.Id, Med.GetTextFromApi(bookRequestDTO, HttpContext), "POST.CREATE_BOOK");
+            return ResponseCreated(_mapper.Map<BookResponseDTO>(createdAuthor));
         }
 
         /// <summary>
@@ -72,9 +79,14 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public BookResponseDTO FindById(int id)
+        public async Task<IActionResult> FindById(int id)
         {
-            return new BookResponseDTO { Id = id };
+            var foundBook = await _service.FindByIdAsync(id);
+            if (NotificatorHasNotifications())
+            {
+                return ResponseNotFound();
+            }
+            return ResponseOk(_mapper.Map<BookResponseDTO>(foundBook));
         }
 
         /// <summary>
@@ -93,9 +105,10 @@ namespace livraria.net.api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public List<BookResponseDTO> FindAll([FromQuery] BookQuery query)
+        public async Task<IActionResult> FindAll([FromQuery] BookQuery query)
         {
-            return new List<BookResponseDTO>();
+            var books = await _service.GetAllAsync(query);
+            return ResponseOk(books.Select(book => _mapper.Map<BookResponseDTO>(book)).ToList());
         }
 
         /// <summary>
@@ -115,9 +128,15 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var bookDTO = new BookResponseDTO { Id = id };
+            await _service.DeleteAsync(id);
+            if (NotificatorHasNotifications())
+            {
+                return ResponseNotFound();
+            }
+            await _log.Information(id, Med.GetTextFromApi(null, HttpContext), "DELETE.DELETE_BOOK");
+            return ResponseNoContent();
         }
 
         /// <summary>
@@ -150,18 +169,15 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public BookResponseDTO Update(int id, BookRequestDTO bookRequestDTO)
+        public async Task<IActionResult> Update(int id, BookRequestDTO bookRequestDTO)
         {
-            return new BookResponseDTO
+            var foundBook = await _service.UpdateAsync(id, _mapper.Map<Book>(bookRequestDTO));
+            if (NotificatorHasNotifications())
             {
-                Id = bookRequestDTO.Id,
-                AuthorId = bookRequestDTO.AuthorId, 
-                Chapters = bookRequestDTO.Chapters, 
-                Isbn = bookRequestDTO.Isbn,
-                Name = bookRequestDTO.Name,
-                Pages = bookRequestDTO.Pages,
-                PublisherId = bookRequestDTO.PublisherId,
-            };
+                return ResponseNotFound();
+            }
+            await _log.Information(id, Med.GetTextFromApi(bookRequestDTO, HttpContext), "PUT.UPDATE_BOOK");
+            return ResponseOk(_mapper.Map<AuthorDTO>(foundBook));
         }
     }
 }

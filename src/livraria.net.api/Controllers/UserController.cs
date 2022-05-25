@@ -1,14 +1,28 @@
-﻿using livraria.net.api.Dto;
+﻿using AutoMapper;
+using livraria.net.api.Dto;
+using livraria.net.core.Contracts;
+using livraria.net.core.Contracts.Logger;
+using livraria.net.core.Controllers;
+using livraria.net.domain.Helper;
+using livraria.net.domain.Models;
+using livraria.net.domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace livraria.net.api.Controllers
 {
-    [ApiController]
     [Route("api/v1/users")]
-    public class UserController : ControllerBase
+    public class UserController : MainController
     {
+        private readonly UserService _service;
+        public UserController(IMapper mapper, INotificator notificator, ILog log, UserService service) : base(mapper, notificator, log)
+        {
+            _service = service;
+        }
+
         /// <summary>
         /// User creation operation
         /// </summary>
@@ -37,9 +51,11 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public UserDTO create(UserDTO userDTO)
+        public async Task<IActionResult> create(UserDTO userDTO)
         {
-            return userDTO;
+            var createdUser = await _service.CreateAsync(_mapper.Map<User>(userDTO));
+            await _log.Information(createdUser.Id, Med.GetTextFromApi(userDTO, HttpContext), "POST.CREATE_USER");
+            return ResponseCreated(_mapper.Map<UserDTO>(createdUser));
         }
 
         /// <summary>
@@ -60,9 +76,14 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public UserDTO FindById(int id)
+        public async Task<IActionResult> FindById(int id)
         {
-            return new UserDTO { Id = id };
+            var foundUser = await _service.FindByIdAsync(id);
+            if (NotificatorHasNotifications())
+            {
+                return ResponseNotFound();
+            }
+            return ResponseOk(_mapper.Map<UserDTO>(foundUser));
         }
 
         /// <summary>
@@ -80,9 +101,10 @@ namespace livraria.net.api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public List<UserDTO> FindAll()
+        public async Task<IActionResult> FindAll()
         {
-            return new List<UserDTO>();
+            var users = await _service.GetAllAsync();
+            return ResponseOk(users.Select(user => _mapper.Map<UserDTO>(user)).ToList());
         }
 
         /// <summary>
@@ -102,9 +124,15 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var userDTO = new UserDTO { Id = id };
+            await _service.DeleteAsync(id);
+            if (NotificatorHasNotifications())
+            {
+                return ResponseNotFound();
+            }
+            await _log.Information(id, Med.GetTextFromApi(null, HttpContext), "DELETE.DELETE_USER");
+            return ResponseNoContent();
         }
 
         /// <summary>
@@ -138,9 +166,15 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public UserDTO Update(int id, UserDTO userDTO)
+        public async Task<IActionResult> Update(int id, UserDTO userDTO)
         {
-            return userDTO;
+            var foundUser = await _service.UpdateAsync(id, _mapper.Map<User>(userDTO));
+            if (NotificatorHasNotifications())
+            {
+                return ResponseNotFound();
+            }
+            await _log.Information(id, Med.GetTextFromApi(userDTO, HttpContext), "PUT.UPDATE_USER");
+            return ResponseOk(_mapper.Map<UserDTO>(foundUser));
         }
     }
 }

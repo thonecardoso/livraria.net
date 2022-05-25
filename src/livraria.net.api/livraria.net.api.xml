@@ -139,7 +139,7 @@
             
             </remarks>
         </member>
-        <member name="M:livraria.net.api.Controllers.BookController.FindAll(livraria.net.api.Query.BookQuery)">
+        <member name="M:livraria.net.api.Controllers.BookController.FindAll(livraria.net.core.Query.BookQuery)">
             <summary>
             List all registered books
             </summary>

@@ -1,6 +1,4 @@
-﻿using livraria.net.core.Query;
-
-namespace livraria.net.api.Query
+﻿namespace livraria.net.core.Query
 {
     public class BookQuery : IQueryBase
     {

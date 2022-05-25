@@ -1,4 +1,5 @@
 ﻿using livraria.net.core.Contracts;
+using livraria.net.core.Query;
 using livraria.net.domain.Contracts.Repository;
 using livraria.net.domain.Models;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace livraria.net.domain.Services
             return await _repository.Add(book);
         } 
 
-        public async Task<List<Book>> GetAllAsync()
+        public async Task<List<Book>> GetAllAsync(BookQuery query)
         {
             return await _repository.GetAll();
         }
@@ -52,13 +53,13 @@ namespace livraria.net.domain.Services
             await _repository.Delete(foundBook);
         }
 
-        public async void UpdateAsync(int id, Book book)
+        public async Task<Book> UpdateAsync(int id, Book book)
         {
             var foundBook = await _repository.FindById(id);
             if (foundBook == null)
             {
                 AddNotification("Book not found!");
-                return;
+                return null;
             }
 
             foundBook.Name = book.Name; 
@@ -69,6 +70,7 @@ namespace livraria.net.domain.Services
             foundBook.PublisherId = book.PublisherId;
             
             await _repository.Update(foundBook);
+            return foundBook;
         }
     }
 }
