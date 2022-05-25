@@ -18,7 +18,8 @@ namespace livraria.net.api.Configs
         public static IServiceCollection AddAppConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
 
-            var server = configuration.GetSection("Variables:DbServer").Value ?? "mssql-server";
+            var server = configuration.GetSection("Variables:DbServer").Value ?? "localhost";
+            //server = "localhost,1430";
             var user = configuration.GetSection("Variables:DbUser").Value ?? "SA"; // Warning do not use the SA account
             var password = configuration.GetSection("Variables:Password").Value ?? "numsey#2021";
             var database = configuration.GetSection("Variables:Database").Value ?? "livrarianet";

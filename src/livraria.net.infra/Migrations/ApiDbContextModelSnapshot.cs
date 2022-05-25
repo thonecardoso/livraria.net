@@ -29,10 +29,11 @@ namespace livraria.net.infra.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
@@ -53,13 +54,15 @@ namespace livraria.net.infra.Migrations
                     b.Property<int>("Chapters")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Isbn")
+                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<int>("Pages")
@@ -90,15 +93,17 @@ namespace livraria.net.infra.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
+                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("FundationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
@@ -119,22 +124,26 @@ namespace livraria.net.infra.Migrations
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
@@ -145,12 +154,12 @@ namespace livraria.net.infra.Migrations
             modelBuilder.Entity("livraria.net.domain.Models.Book", b =>
                 {
                     b.HasOne("livraria.net.domain.Models.Author", "Author")
-                        .WithMany("books")
+                        .WithMany("Books")
                         .HasForeignKey("AuthorId")
                         .IsRequired();
 
                     b.HasOne("livraria.net.domain.Models.Publisher", "Publisher")
-                        .WithMany("books")
+                        .WithMany("Books")
                         .HasForeignKey("PublisherId")
                         .IsRequired();
 
@@ -165,12 +174,12 @@ namespace livraria.net.infra.Migrations
 
             modelBuilder.Entity("livraria.net.domain.Models.Author", b =>
                 {
-                    b.Navigation("books");
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("livraria.net.domain.Models.Publisher", b =>
                 {
-                    b.Navigation("books");
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("livraria.net.domain.Models.User", b =>

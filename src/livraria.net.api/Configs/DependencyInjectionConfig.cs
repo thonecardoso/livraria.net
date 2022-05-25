@@ -14,8 +14,16 @@ namespace livraria.net.api.Configs
         {
            
             services.AddScoped<INotificator, NotificatorHandler>();
+
             services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IPublisherRepository, PublisherRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            
             services.AddScoped<AuthorService>();
+            services.AddScoped<BookService>();
+            services.AddScoped<PublisherService>();
+            services.AddScoped<UserService>();
 
             return services;
         }

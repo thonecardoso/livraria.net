@@ -1,11 +1,7 @@
-﻿using AutoMapper;
-using livraria.net.core.Contracts;
+﻿using livraria.net.core.Contracts;
 using livraria.net.domain.Contracts.Repository;
 using livraria.net.domain.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace livraria.net.domain.Services
@@ -28,6 +24,47 @@ namespace livraria.net.domain.Services
             return await _repository.GetAll();
         }
 
-        
+        public async Task<Author> FindByIdAsync(int id)
+        {
+            var foundAuthor = await _repository.FindById(id);
+            if (foundAuthor == null)
+            {
+                AddNotification("Author not found!");
+                return null;
+            }
+
+            return foundAuthor;
+        }
+
+        public async Task<List<Author>> FindAllAsync()
+        {
+            return await _repository.GetAll();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var foundAuthor = await _repository.FindById(id);
+            if (foundAuthor == null)
+            {
+                AddNotification("Author not found!");
+                return;
+            }
+            await _repository.Delete(foundAuthor);
+        }
+
+        public async void UpdateAsync(int id, Author author)
+        {
+            var foundAuthor = await _repository.FindById(id);
+            if (foundAuthor == null)
+            {
+                AddNotification("Author not found!");
+                return;
+            }
+
+            foundAuthor.Name = author.Name; 
+            foundAuthor.Age = author.Age;
+
+            await _repository.Update(foundAuthor);
+        }
     }
 }

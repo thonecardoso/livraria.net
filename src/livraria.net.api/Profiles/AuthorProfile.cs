@@ -9,6 +9,10 @@ namespace livraria.net.api.Profiles
         public AuthorProfile()
         {
             CreateMap<AuthorDTO, Author>().ReverseMap();
+            CreateMap<UserDTO, User>().ReverseMap();
+            CreateMap<PublisherDTO, Publisher>().ReverseMap();
+            CreateMap<BookRequestDTO, Book>();
+            CreateMap<Book, BookRequestDTO>();
         }
     }
 }
