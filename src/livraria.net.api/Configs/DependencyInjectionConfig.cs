@@ -28,6 +28,7 @@ namespace livraria.net.api.Configs
             services.AddScoped<PublisherService>();
             services.AddScoped<UserService>();
 
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddSingleton<IMessageService, MessageService>();
             services.AddScoped<ILog, Log>();
 

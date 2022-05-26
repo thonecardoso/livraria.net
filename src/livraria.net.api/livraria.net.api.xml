@@ -287,7 +287,7 @@
             
             </remarks> 
         </member>
-        <member name="M:livraria.net.api.Controllers.UserController.create(livraria.net.api.Dto.UserDTO)">
+        <member name="M:livraria.net.api.Controllers.UserController.create(livraria.net.api.Dto.UserRequestDTO)">
             <summary>
             User creation operation
             </summary>
@@ -320,6 +320,7 @@
             <param name="id"></param>
             <returns></returns>
             <response code="200">Success user found</response>>
+            <response code="401">Unauthorized</response>>
             <response code="404">User not found error code</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
@@ -335,6 +336,7 @@
             </summary>
             <returns></returns>
             <response code="200">Success all registered users</response>>
+            <response code="401">Unauthorized</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
             Request Exemple:
@@ -349,6 +351,7 @@
             </summary>
             <param name="id"></param>
             <response code="204">Success user deleted</response>>
+            <response code="401">Unauthorized</response>>
             <response code="404">User not found error code</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
@@ -358,7 +361,7 @@
             
             </remarks>
         </member>
-        <member name="M:livraria.net.api.Controllers.UserController.Update(System.Int32,livraria.net.api.Dto.UserDTO)">
+        <member name="M:livraria.net.api.Controllers.UserController.Update(System.Int32,livraria.net.api.Dto.UserRequestDTO)">
             <summary>
             User update operation
             </summary>
@@ -367,6 +370,7 @@
             <returns></returns>
             <response code="200">Success user updated</response>>
             <response code="400">Missing required fields, or an error on validation field rules</response>>        
+            <response code="401">Unauthorized</response>>        
             <response code="404">User not found</response>> 
             <response code="500">Internal error on the API</response>>
             <remarks>
@@ -382,6 +386,27 @@
                     "Username":"IsabelaBatista",
                     "Password":"42119ca2398640f1a0322652cd91876f",
                     "Birthdate":"1975-11-16T14:13:49.1963533-02:00"
+                }
+            
+            </remarks> 
+        </member>
+        <member name="M:livraria.net.api.Controllers.UserController.Authenticate(livraria.net.core.Dto.AuthenticateUserDTO)">
+            <summary>
+            Authenticate user operation
+            </summary>
+            <param name="authenticateUserDTO"></param>
+            <returns></returns>
+            <response code="200">Success user authenticated</response>>
+            <response code="400">Missing required fields, or an error on validation field rules</response>>        
+            <response code="404">Username or password is wrong</response>> 
+            <response code="500">Internal error on the API</response>>
+            <remarks>
+            Request Exemple:
+                
+                POST /api/v1/authenticate
+                {
+                    "Username":"IsabelaBatista",
+                    "Password":"42119ca2398640f1a0322652cd91876f"
                 }
             
             </remarks> 

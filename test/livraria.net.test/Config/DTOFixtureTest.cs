@@ -104,7 +104,7 @@ namespace livraria.net.test.Config
             };
         }
 
-        public UserDTO GenerateValidUserDTO()
+        public UserRequestDTO GenerateValidUserDTO()
         {
             var faker = new Faker("pt_BR");
             var gender = faker.PickRandom<Name.Gender>();
@@ -117,8 +117,8 @@ namespace livraria.net.test.Config
             var password = Guid.NewGuid().ToString().Replace("-", "");
             var days = (int)(age * 365.25) + faker.Random.Int(0, 362);
             var birthdate = DateTime.Now.AddDays(-days);
-            var validUserDTO = new Faker<UserDTO>("pt_BR")
-               .CustomInstantiator(f => new UserDTO
+            var validUserDTO = new Faker<UserRequestDTO>("pt_BR")
+               .CustomInstantiator(f => new UserRequestDTO
                {
                    Name = name + " " + surname,
                    Gender = userGender,
@@ -133,9 +133,9 @@ namespace livraria.net.test.Config
 
         }
 
-        public UserDTO GenerateInvalidUserDTO()
+        public UserRequestDTO GenerateInvalidUserDTO()
         {
-            return new UserDTO
+            return new UserRequestDTO
             {
                 Name = "a",
                 Gender = (G.Gender) 12,

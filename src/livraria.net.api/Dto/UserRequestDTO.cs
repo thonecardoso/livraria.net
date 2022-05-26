@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace livraria.net.api.Dto
 {
-    public class UserDTO
+    public class UserRequestDTO
     {
         [Display(Name = "Id do Usuário")]
         public int Id { get; set; }

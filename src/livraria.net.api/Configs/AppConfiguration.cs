@@ -1,5 +1,6 @@
 ﻿using FluentValidation.AspNetCore;
 using livraria.net.infra.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace livraria.net.api.Configs
@@ -44,12 +47,31 @@ namespace livraria.net.api.Configs
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+
             services.AddControllers().AddNewtonsoftJson(); 
 
             //services.AddControllers()
             //    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<StartupApiTests>());
 
             services.AddSwaggerConfiguration();
+
+            var secret = Encoding.ASCII.GetBytes(configuration.GetSection("JwtConfigurations:Secret").Value);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+                        {
+                            x.RequireHttpsMetadata = false;
+                            x.SaveToken = true;
+                            x.TokenValidationParameters = new TokenValidationParameters
+                            {
+                                ValidateIssuerSigningKey = true,
+                                IssuerSigningKey = new SymmetricSecurityKey(secret),
+                                ValidateIssuer = false,
+                                ValidateAudience = false
+                            };
+                        });
 
             return services;
         }
@@ -66,6 +88,8 @@ namespace livraria.net.api.Configs
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -73,19 +97,17 @@ namespace livraria.net.api.Configs
                 endpoints.MapControllers();
             });
 
-           //DatabaseManagementService.MigrationInitialisation(app);
+           DatabaseManagementService.MigrationInitialisation(app);
 
             return app;
         }
 
         public static class DatabaseManagementService
         {
-            // Getting the scope of our database context
             public static void MigrationInitialisation(IApplicationBuilder app)
             {
                 using (var serviceScope = app.ApplicationServices.CreateScope())
                 {
-                    // Takes all of our migrations files and apply them against the database in case they are not implemented
                     serviceScope.ServiceProvider.GetService<ApiDbContext>().Database.Migrate();
                 }
             }
