@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "livraria.net.core", "src\li
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6AC4FB03-D6C5-42AF-963D-E2C76D06723E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "livraria.net.infra", "src\livraria.net.infra\livraria.net.infra.csproj", "{1E67174A-991D-407A-9965-5032A1F03655}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "livraria.net.infra", "src\livraria.net.infra\livraria.net.infra.csproj", "{1E67174A-991D-407A-9965-5032A1F03655}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "livraria.net.consumer.log", "src\livraria.net.consumer.log\livraria.net.consumer.log.csproj", "{A9377E66-4C50-4E15-B661-9B4498D62870}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{1E67174A-991D-407A-9965-5032A1F03655}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E67174A-991D-407A-9965-5032A1F03655}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E67174A-991D-407A-9965-5032A1F03655}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9377E66-4C50-4E15-B661-9B4498D62870}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9377E66-4C50-4E15-B661-9B4498D62870}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9377E66-4C50-4E15-B661-9B4498D62870}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9377E66-4C50-4E15-B661-9B4498D62870}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +65,7 @@ Global
 		{718A4819-9EA4-4093-9172-0B8D4E42A2EB} = {35B09715-668C-4FDE-A9D9-0602DAA92B49}
 		{3ECFD3F6-C2D4-4699-B281-C50E00E5DF71} = {FA703AD7-4452-47C2-AEB2-CB9ABB2E2797}
 		{1E67174A-991D-407A-9965-5032A1F03655} = {FA703AD7-4452-47C2-AEB2-CB9ABB2E2797}
+		{A9377E66-4C50-4E15-B661-9B4498D62870} = {FA703AD7-4452-47C2-AEB2-CB9ABB2E2797}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95A6D670-2A0D-4E00-AF32-FA4897171AF1}

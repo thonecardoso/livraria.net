@@ -6,6 +6,7 @@ using livraria.net.core.Controllers;
 using livraria.net.domain.Helper;
 using livraria.net.domain.Models;
 using livraria.net.domain.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace livraria.net.api.Controllers
 {
+    [Authorize]
     [Route("api/v1/publishers")]
     public class PublisherController : MainController
     {
@@ -30,6 +32,7 @@ namespace livraria.net.api.Controllers
         /// <returns></returns>
         /// <response code="201">Success publisher created</response>>
         /// <response code="400">Missing required fields, wrong field range value or publisher already registered</response>>
+        /// <response code="401">Unauthorized</response>>
         /// <response code="500">Internal error on the API</response>>
         /// <remarks>
         /// Request Exemple:
@@ -46,9 +49,11 @@ namespace livraria.net.api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> create(PublisherDTO publisherDTO)
         {
+            if (!ModelState.IsValid) return ResponseModelError(ModelState);
             var createdPubliser = await _service.CreateAsync(_mapper.Map<Publisher>(publisherDTO));
             await _log.Information(createdPubliser.Id, Med.GetTextFromApi(publisherDTO, HttpContext), "POST.CREATE_PUBLISHER");
             return ResponseCreated(_mapper.Map<PublisherDTO>(createdPubliser));
@@ -60,6 +65,7 @@ namespace livraria.net.api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         /// <response code="200">Success publisher found</response>>
+        /// <response code="401">Unauthorized</response>>
         /// <response code="404">Publisher not found error code</response>>
         /// <response code="500">Internal error on the API</response>>
         /// <remarks>
@@ -70,6 +76,7 @@ namespace livraria.net.api.Controllers
         /// </remarks>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> FindById(int id)
@@ -87,6 +94,7 @@ namespace livraria.net.api.Controllers
         /// </summary>
         /// <returns></returns>
         /// <response code="200">Success all registered publishers</response>>
+        /// <response code="401">Unauthorized</response>>
         /// <response code="500">Internal error on the API</response>>
         /// <remarks>
         /// Request Exemple:
@@ -96,6 +104,7 @@ namespace livraria.net.api.Controllers
         /// </remarks>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> FindAll()
         {
@@ -108,6 +117,7 @@ namespace livraria.net.api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <response code="204">Success publisher deleted</response>>
+        /// <response code="401">Unauthorized</response>>
         /// <response code="404">Publisher not found error code</response>>
         /// <response code="500">Internal error on the API</response>>
         /// <remarks>
@@ -118,6 +128,7 @@ namespace livraria.net.api.Controllers
         /// </remarks>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
@@ -138,7 +149,8 @@ namespace livraria.net.api.Controllers
         /// <param name="publisherDTO"></param>
         /// <returns></returns>
         /// <response code="200">Success publisher updated</response>>
-        /// <response code="400">Missing required fields, or an error on validation field rules</response>>        
+        /// <response code="400">Missing required fields, or an error on validation field rules</response>> 
+        /// <response code="401">Unauthorized</response>>
         /// <response code="404">Publisher not found</response>> 
         /// <response code="500">Internal error on the API</response>>
         /// <remarks>
@@ -156,10 +168,12 @@ namespace livraria.net.api.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Update(int id, PublisherDTO publisherDTO)
         {
+            if (!ModelState.IsValid) return ResponseModelError(ModelState);
             var foundPublisher = await _service.UpdateAsync(id, _mapper.Map<Publisher>(publisherDTO));
             if (NotificatorHasNotifications())
             {

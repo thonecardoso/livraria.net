@@ -27,14 +27,16 @@ namespace livraria.net.domain.Helper
             var path = (context.Request.PathBase.HasValue ? context.Request.PathBase.Value : String.Empty)
                 + (context.Request.Path.HasValue ? context.Request.Path.Value : String.Empty);
 
-            return
-                $"Origem: {Origin}:{context.Connection.RemotePort}\n" +
-                $"Destino: {context.Connection.LocalIpAddress}:{context.Connection.LocalPort}\n" +
-                $"Scheme: {context.Request.Scheme}\n" +
-                $"Path: {path}\n" +
-                $"Method: {context.Request.Method}\n" +
-                $"ContentType: {context.Request.ContentType}\n" +
-                $"Payload: {JsonConvert.SerializeObject(Model, Formatting.None)}";
+            return JsonConvert.SerializeObject(new
+            {
+                Origim = $"{Origin}:{context.Connection.RemotePort}",
+                Destiny = $"{context.Connection.LocalIpAddress}:{context.Connection.LocalPort}",
+                Scheme = $"{context.Request.Scheme}",
+                Path = $"{path}",
+                Method = $"{context.Request.Method}",
+                ContentType = $"{context.Request.ContentType}",
+                Payload = Model
+            });
         }
 
         public static string GetTextFromResponse(ObjectResult result)

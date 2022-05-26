@@ -57,6 +57,7 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> create(UserRequestDTO userDTO)
         {
+            if (!ModelState.IsValid) return ResponseModelError(ModelState);
             var createdUser = await _service.CreateAsync(_mapper.Map<User>(userDTO));
             await _log.Information(createdUser.Id, Med.GetTextFromApi(userDTO, HttpContext), "POST.CREATE_USER");
             return ResponseCreated(_mapper.Map<UserResponseDTO>(createdUser));
@@ -77,8 +78,8 @@ namespace livraria.net.api.Controllers
         ///     GET /api/v1/users/123
         /// 
         /// </remarks>
-        [HttpGet("{id}")]
         [Authorize]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -131,8 +132,8 @@ namespace livraria.net.api.Controllers
         ///     DELETE /api/v1/users/123
         /// 
         /// </remarks>
-        [HttpDelete("{id}")]
         [Authorize]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -175,8 +176,8 @@ namespace livraria.net.api.Controllers
         ///     }
         /// 
         /// </remarks> 
-        [HttpPut("{id}")]
         [Authorize]
+        [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -184,6 +185,7 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Update(int id, UserRequestDTO userDTO)
         {
+            if (!ModelState.IsValid) return ResponseModelError(ModelState);
             var foundUser = await _service.UpdateAsync(id, _mapper.Map<User>(userDTO));
             if (NotificatorHasNotifications())
             {
@@ -219,6 +221,7 @@ namespace livraria.net.api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Authenticate(AuthenticateUserDTO authenticateUserDTO)
         {
+            if (!ModelState.IsValid) return ResponseModelError(ModelState);
             var token = await _authenticationService.TokenGenerate(authenticateUserDTO);
             if (NotificatorHasNotifications())
             {
