@@ -111,9 +111,9 @@ namespace livraria.net.api.Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> FindAll([FromQuery] BookQuery query, [FromQuery] bool sortByName, [FromQuery] bool sortById)
+        public async Task<IActionResult> FindAll([FromQuery] bool sortByName, [FromQuery] bool sortById)
         {
-            var books = await _service.GetAllAsync(query);
+            var books = await _service.GetAllAsync(new BookQuery());
             if (sortByName)
             {
                 books = books.OrderBy(book => book.Name).ToList();
