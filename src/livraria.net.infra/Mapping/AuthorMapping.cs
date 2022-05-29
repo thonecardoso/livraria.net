@@ -15,6 +15,39 @@ namespace livraria.net.infra.Mapping
                 .IsRequired();
             builder.HasMany(x => x.Books);
             builder.Property(x => x.CreatedAt);
+
+            builder.HasData(
+                new Author
+                {
+                    Id = 1,
+                    Name = "Stephen King",
+                    Age = 75
+                },
+                 new Author
+                 {
+                     Id = 2,
+                     Name = "Joe Hill",
+                     Age = 49
+                 },
+                 new Author
+                 {
+                     Id = 3,
+                     Name = "Dan Brown",
+                     Age = 57
+                 },
+                 new Author
+                 {
+                     Id = 4,
+                     Name = "Ken Follett",
+                     Age = 72
+                 },
+                 new Author
+                 {
+                     Id = 5,
+                     Name = "Sidney Sheldon",
+                     Age = 89
+                 }
+            );
         }
     }
 }
