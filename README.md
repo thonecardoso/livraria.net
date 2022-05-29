@@ -8,16 +8,18 @@ O projeto foi desenvolvido para um desafio técnico em um processo seletivo de u
 ## 🛠 Tecnologias
 
 <hr>
-![Linkedin Badge](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
-![Linkedin Badge](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
-![Linkedin Badge](https://img.shields.io/badge/Visual_Studio-5C2D91?style=for-the-badge&logo=visual%20studio&logoColor=white)
-![Linkedin Badge](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white)
-![Linkedin Badge](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)
-![Linkedin Badge](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
-![Linkedin Badge](https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white)
-![Linkedin Badge](https://img.shields.io/badge/xUnity-100000?style=for-the-badge&logo=unity&logoColor=white)
-![Linkedin Badge](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-![Linkedin Badge](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
+
+
+![Badge](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
+<img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white"/>
+<img src="https://img.shields.io/badge/Visual_Studio-5C2D91?style=for-the-badge&logo=visual%20studio&logoColor=white"/>
+<img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white"/>
+<img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white"/>
+<img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white"/>
+<img src="https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white"/>
+<img src="https://img.shields.io/badge/xUnity-100000?style=for-the-badge&logo=unity&logoColor=white"/>
+<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
+
 <hr>
 
 * JWT Token para autenticação das APIs;
@@ -51,11 +53,11 @@ No Docker Desktop podemos visualizar os contêineres que foram criados com o com
 * livraria.net.api_1 - Nossa aplicação rodando em um contêiner Docker
 
 ![Tela Swagger](./IMG/docker.png)
-
+  
 ## Como usar
 Para utilizar e testar o projeto acesse os endereços abaixo: 
 ```bash
-http://localhost:58150 
+http://localhost:58150/swagger/index.html 
 ```
 Agora você será redirecionado para a página de OpenApi do Swagger onde poderá testar os endpoint, também pode utilizar outras ferramentas para isso.
 
@@ -189,6 +191,11 @@ Para a aplicação ficar legal ainda necessita realizar algumas implementações
 
 ## Problemas encontrados durante a implementação
 
-Foi tentado usar mensageiria para enviar os dados dos logs para uma aplicação separada que estaria escutando uma fila no RabbitMq, porém ocorreu alguns problemas que estavam consumindo muito tempo então desisti e realizei a implementação dos logs diretamente pela api.  
-Ocorreu um problema com o retorno da api, a asencia de um "await" em um serviço assíncrono estava retornando uma task não concluída para o NewtonSoft que não conseguia realizar a serialização, a mensagem de erro apontava para uma self referência que dificultou encontrar a falha.  
-A gestão do tempo também foi um fator importante, com as demandas da rotina dedicar se mostrou-se complicado nessas últimas semanas.
+* Foi tentado usar mensageiria para enviar os dados dos logs para uma aplicação separada que estaria escutando uma fila no RabbitMq, porém ocorreu alguns problemas que estavam consumindo muito tempo então desisti e realizei a implementação dos logs diretamente pela api.  
+* Ocorreu um problema com o retorno da api, a asencia de um "await" em um serviço assíncrono estava retornando uma task não concluída para o NewtonSoft que não conseguia realizar a serialização, a mensagem de erro apontava para uma self referência que dificultou encontrar a falha.  
+* A gestão do tempo também foi um fator importante, com as demandas da rotina dedicar se mostrou-se complicado nessas últimas semanas.
+
+## Autor
+
+| [<img src="https://avatars.githubusercontent.com/u/46010284?v=4" width=115><br><sub>Thone Cardoso de Araujo</sub>](https://github.com/thonecardoso) |
+| :---: |
