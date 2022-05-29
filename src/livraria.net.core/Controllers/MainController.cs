@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
 using livraria.net.core.Contracts;
-using livraria.net.core.Contracts.Logger;
 using livraria.net.core.Controllers.Shared;
 using livraria.net.core.Extensions;
 using livraria.net.core.Notificator;

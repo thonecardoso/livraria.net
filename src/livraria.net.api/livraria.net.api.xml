@@ -11,6 +11,7 @@
             <param name="authorDTO"></param>
             <returns></returns>
             <response code="201">Success author created</response>>
+            <response code="401">Unauthorized</response>>
             <response code="400">Missing required fields, wrong field range value or author already registered</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
@@ -32,6 +33,7 @@
             <param name="id"></param>
             <returns></returns>
             <response code="200">Success author found</response>>
+            <response code="401">Unauthorized</response>>
             <response code="404">Author not found error code</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
@@ -47,6 +49,7 @@
             </summary>
             <returns></returns>
             <response code="200">Success all registered authors</response>>
+            <response code="401">Unauthorized</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
             Request Exemple:
@@ -61,6 +64,7 @@
             </summary>
             <param name="id"></param>
             <response code="204">Success author deleted</response>>
+            <response code="401">Unauthorized</response>>
             <response code="404">Author not found error code</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
@@ -78,7 +82,8 @@
             <param name="authorDTO"></param>
             <returns></returns>
             <response code="200">Success author updated</response>>
-            <response code="400">Missing required fields, or an error on validation field rules</response>>        
+            <response code="400">Missing required fields, or an error on validation field rules</response>>   
+            <response code="401">Unauthorized</response>>
             <response code="404">Author not found</response>> 
             <response code="500">Internal error on the API</response>>
             <remarks>
@@ -106,6 +111,7 @@
             <returns></returns>
             <response code="201">Success book creation</response>>
             <response code="400">Missing required fields, wrong field range value or book already registered</response>>
+            <response code="401">Unauthorized</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
             Request Exemple:
@@ -130,6 +136,7 @@
             <param name="id"></param>
             <returns></returns>
             <response code="200">Success book found</response>>
+            <response code="401">Unauthorized</response>>
             <response code="404">Book not found error code</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
@@ -139,13 +146,14 @@
             
             </remarks>
         </member>
-        <member name="M:livraria.net.api.Controllers.BookController.FindAll(livraria.net.core.Query.BookQuery)">
+        <member name="M:livraria.net.api.Controllers.BookController.FindAll(livraria.net.core.Query.BookQuery,System.Boolean,System.Boolean)">
             <summary>
             List all registered books
             </summary>
             <param name="query"></param>
             <returns></returns>
             <response code="200">Success all registered books</response>>
+            <response code="401">Unauthorized</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
             Request Exemple:
@@ -160,6 +168,7 @@
             </summary>
             <param name="id"></param>
             <response code="204">Success book deleted</response>>
+            <response code="401">Unauthorized</response>>
             <response code="404">Book not found error code</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
@@ -177,7 +186,8 @@
             <param name="bookRequestDTO"></param>
             <returns></returns>
             <response code="200">Success book updated</response>>
-            <response code="400">Missing required fields, or an error on validation field rules</response>>        
+            <response code="400">Missing required fields, or an error on validation field rules</response>> 
+            <response code="401">Unauthorized</response>>
             <response code="404">Book not found</response>> 
             <response code="500">Internal error on the API</response>>
             <remarks>
@@ -204,6 +214,7 @@
             <returns></returns>
             <response code="201">Success publisher created</response>>
             <response code="400">Missing required fields, wrong field range value or publisher already registered</response>>
+            <response code="401">Unauthorized</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
             Request Exemple:
@@ -225,6 +236,7 @@
             <param name="id"></param>
             <returns></returns>
             <response code="200">Success publisher found</response>>
+            <response code="401">Unauthorized</response>>
             <response code="404">Publisher not found error code</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
@@ -240,6 +252,7 @@
             </summary>
             <returns></returns>
             <response code="200">Success all registered publishers</response>>
+            <response code="401">Unauthorized</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
             Request Exemple:
@@ -254,6 +267,7 @@
             </summary>
             <param name="id"></param>
             <response code="204">Success publisher deleted</response>>
+            <response code="401">Unauthorized</response>>
             <response code="404">Publisher not found error code</response>>
             <response code="500">Internal error on the API</response>>
             <remarks>
@@ -271,7 +285,8 @@
             <param name="publisherDTO"></param>
             <returns></returns>
             <response code="200">Success publisher updated</response>>
-            <response code="400">Missing required fields, or an error on validation field rules</response>>        
+            <response code="400">Missing required fields, or an error on validation field rules</response>> 
+            <response code="401">Unauthorized</response>>
             <response code="404">Publisher not found</response>> 
             <response code="500">Internal error on the API</response>>
             <remarks>

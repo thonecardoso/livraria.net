@@ -3,6 +3,7 @@ using livraria.net.core.Query;
 using livraria.net.domain.Contracts.Repository;
 using livraria.net.domain.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace livraria.net.domain.Services
@@ -10,9 +11,11 @@ namespace livraria.net.domain.Services
     public class BookService : BaseService
     {
         private readonly IBookRepository _repository;
-        public BookService(INotificator notificator, IBookRepository repository) : base(notificator)
+        private readonly AuthorService _authorService;
+        public BookService(INotificator notificator, IBookRepository repository, AuthorService authorService) : base(notificator)
         {
             _repository = repository;
+            _authorService = authorService;
         }
 
         public async Task<Book> CreateAsync(Book book)
@@ -22,7 +25,13 @@ namespace livraria.net.domain.Services
 
         public async Task<List<Book>> GetAllAsync(BookQuery query)
         {
-            return await _repository.GetAll();
+            var books =  await _repository.GetAll();
+            foreach (var book in books)
+            {
+                book.Author = _authorService.FindByIdAsync(book.AuthorId).Result;
+            }
+            return books;
+                
         }
 
         public async Task<Book> FindByIdAsync(int id)

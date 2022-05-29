@@ -1,5 +1,6 @@
-﻿using livraria.net.core.Contracts.Logger;
-using livraria.net.infra.RabbitMq;
+﻿using livraria.net.core.Contracts;
+using livraria.net.core.Models;
+using livraria.net.infra.Data;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
@@ -8,22 +9,27 @@ namespace livraria.net.api.Logger
 
     public class Log : ILog
     {
-        private readonly IMessageService _messageService;
+        private readonly LogDbContext _logDbContext;
 
-        public Log(IMessageService messageService)
+        public Log(LogDbContext logDbContext)
         {
-            _messageService = messageService;
+            _logDbContext = logDbContext;
         }
 
-        public async Task<bool> Error(int id, string message, string operationType)
+        public async Task Error(int id, string message, string operationType)
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task<bool> Information(int id, string message, string operationType)
+        public async Task Information(int id, string message, string operationType)
         {
-            
-            return await _messageService.Enqueue(JsonConvert.SerializeObject(new { Id = id, Message = message, OperationType = operationType }, Formatting.None));
+            var messageLog = new MessageLog
+            {
+                Message = JsonConvert.SerializeObject(
+                    new { Id = id, Message = message, OperationType = operationType }, Formatting.None
+                    )
+            };
+            await _logDbContext.Messages.InsertOneAsync(messageLog);
         }
     }
 }

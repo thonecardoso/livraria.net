@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using livraria.net.api.Dto;
 using livraria.net.core.Contracts;
-using livraria.net.core.Contracts.Logger;
 using livraria.net.core.Controllers;
 using livraria.net.core.Dto;
 using livraria.net.domain.Helper;
